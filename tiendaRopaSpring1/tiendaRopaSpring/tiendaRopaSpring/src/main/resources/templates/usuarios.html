@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios - Tienda Ropa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container">
+
+<h1 class="mt-4">Registrar Nuevo Usuario</h1>
+<div class="card card-body mb-4">
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>¡Atención!</strong> <span th:text="${error}">Mensaje de error</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <form th:action="@{/web/usuarios/registrar}" th:object="${nuevoUsuario}" method="post">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Nombre:</label>
+                <input type="text" th:field="*{nombre}" class="form-control" placeholder="Nombre completo" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">DNI:</label>
+                <input type="text" th:field="*{dni}" class="form-control" placeholder="DNI" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Email:</label>
+                <input type="email" th:field="*{email}" class="form-control" placeholder="email@ejemplo.com" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Contraseña:</label>
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Teléfono:</label>
+                <input type="text" th:field="*{telefono}" class="form-control" placeholder="Teléfono">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Dirección:</label>
+                <input type="text" th:field="*{direccion}" class="form-control" placeholder="Dirección">
+            </div>
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr>
+
+<h2>Listado de Usuarios</h2>
+<table class="table table-striped table-bordered mt-3">
+    <thead class="table-dark">
+    <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>DNI</th>
+        <th class="text-center">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="u : ${listaUsuarios}">
+        <td th:text="${u.nombre}">Nombre</td>
+        <td th:text="${u.email}">Email</td>
+        <td th:text="${u.dni}">DNI</td>
+        <td class="text-center">
+            <a th:href="@{/web/usuarios/detalle/{id}(id=${u.id})}" class="btn btn-info btn-sm">Ver detalle</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
